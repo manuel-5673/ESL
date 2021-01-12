@@ -1,0 +1,7 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {italian}{}
+\babel@toc {italian}{}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {1}Metodi lineari di classificazione}{2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.1}Introduzione}{2}%
