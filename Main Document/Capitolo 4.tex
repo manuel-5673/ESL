@@ -15,6 +15,15 @@
 ]{biblatex}
 \usepackage[a4paper]{geometry}
 
+\newenvironment{nalign}{
+    \begin{equation}
+    \begin{aligned}
+}{
+    \end{aligned}
+    \end{equation}
+    \ignorespacesafterend
+}
+
 
 \addbibresource{../References/referencias.bib}
 
@@ -37,10 +46,17 @@ In questo capitolo rivisitiamo il problema di classificazione e ci concentriamo 
 Ci sono diversi modi in cui le frontiere di decisione lineari possono essere trovate. Nel Capitolo 2 abbiamo adattato modelli di regressione lineare alle variabili indicatori di classi, e dopo classifichiamo secondo il \textbf{largest fit}. Supponiamo che ci sono $K$ classi, etichettate come $1, 2, \dots, K$ per comodità, ed il modello lineare adattato per la $k$-esima variabile indicatore di risposta sia $\hat{f}_k(x) = \hat{\beta}_{k0} + \hat{\beta}_k^T x$. La frontiera di decisione tra la classe $k$ e $l$ è il insieme di punti per cui $\hat{f}_k (x) = \hat{f}_l (x)$, cioè, il insieme $\{ x : \left( \hat{\beta}_{k0} - \hat{\beta}_{l0} \right) + \left( \hat{\beta}_{k} - \hat{\beta}_{l} \right)^T x = 0 \}$, che è un insieme affine o un iperpiano\footnote{In senso stretto, un iperpiano attraversa l'origine, mentre un insieme affine non necessariamente. A volte ignoriamo la distinzione e intendiamo iperpiani in generale}. Siccome lo stesso è vero per ogni paio di classi, lo spazio di input è diviso in regioni di classificazione costante, con frontiere di decisione che sono iperplanare a tratti. Questo approccio con regressione fa parte di una classe di metodi che modellano \textit{funzioni discriminanti} $\delta_k (x)$ per ogni classe, e dopo classificano $x$ alla classe con il valore più grande nella sua funzione discriminante. Metodi che modellano le probabilità posteriori $\text{Pr}(G = k | X = x)$ appartengono anche a questa classe. Chiaramente, se $\delta_k (x)$ o $\text{Pr}(G = k | X = x)$ sono lineare in $x$, allora le frontiere di decisione saranno anche lineare.
 
 In realtà, tutto ciò di cui abbiamo bisogno è che alcuna trasformazione monotona di $\delta_k$ o $\text{Pr}(G = k | X = x)$ sia lineare affinché le frontiere di decisione siano lineari. Per esempio, se ci sono due classi, un modello popolare per le probabilità posteriori è
-\begin{align}
+\begin{nalign} \label{eq4-1}
 \text{Pr}(G = 1 | X = 1) & = \frac{e^{\beta_0 + \beta^T x}}{1 + e^{\beta_0 + \beta^T x}},\\
 \text{Pr}(G = 2 | X = 1) & = \frac{1}{1 + e^{\beta_0 + \beta^T x}}.
-\end{align}
+\end{nalign}
+La trasformazione monotona qui è la trasformazione \textit{logit}: $\ln[p/(1 - p)]$\footnote{Se $p_1 = \text{Pr}(G = 1 | X = 1)$ e $p_2 = \text{Pr}(G = 2 | X = 1)$, poi abbiamo che $\ln[p_1/(1 - p_1)] = \beta_0 + \beta^T x$ e $\ln[p_2/(1 - p_2)] = - \left( \beta_0 + \beta^T x \right)$.}, e infatti vediamo che
+\begin{equation} \label{eq4-2}
+\ln \frac{\text{Pr}(G = 1 | X = 1)}{\text{Pr}(G = 2 | X = 1)} = \beta_0 + \beta^T x.
+\end{equation}
+La frontiera di decisione è il insieme di punti dove le log-probabilità sono zero, e questo è un iperpiano definito da $\{ x | \beta_0 + \beta^T x = 0 \}$. Discutiamo qui due metodi molto popolari ma diversi che risultano in log-probabilità lineari o \textit{logits}: il analisi di discriminante lineare e la regressione logistica lineare. Sebbene sono diversi nella sua derivazione, la differenza essenziale tra loro è nel modo in cui la funzione lineare si adatta ai dati di addestramento.
+
+Un approccio più diretto è modellare esplicitamente le frontiere tra le classi come lineare. 
 
 %\printbibliography
 
