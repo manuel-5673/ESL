@@ -46,17 +46,51 @@ In questo capitolo rivisitiamo il problema di classificazione e ci concentriamo 
 Ci sono diversi modi in cui le frontiere di decisione lineari possono essere trovate. Nel Capitolo 2 abbiamo adattato modelli di regressione lineare alle variabili indicatori di classi, e dopo classifichiamo secondo il \textbf{largest fit}. Supponiamo che ci sono $K$ classi, etichettate come $1, 2, \dots, K$ per comodità, ed il modello lineare adattato per la $k$-esima variabile indicatore di risposta sia $\hat{f}_k(x) = \hat{\beta}_{k0} + \hat{\beta}_k^T x$. La frontiera di decisione tra la classe $k$ e $l$ è il insieme di punti per cui $\hat{f}_k (x) = \hat{f}_l (x)$, cioè, il insieme $\{ x : \left( \hat{\beta}_{k0} - \hat{\beta}_{l0} \right) + \left( \hat{\beta}_{k} - \hat{\beta}_{l} \right)^T x = 0 \}$, che è un insieme affine o un iperpiano\footnote{In senso stretto, un iperpiano attraversa l'origine, mentre un insieme affine non necessariamente. A volte ignoriamo la distinzione e intendiamo iperpiani in generale}. Siccome lo stesso è vero per ogni paio di classi, lo spazio di input è diviso in regioni di classificazione costante, con frontiere di decisione che sono iperplanare a tratti. Questo approccio con regressione fa parte di una classe di metodi che modellano \textit{funzioni discriminanti} $\delta_k (x)$ per ogni classe, e dopo classificano $x$ alla classe con il valore più grande nella sua funzione discriminante. Metodi che modellano le probabilità posteriori $\text{Pr}(G = k | X = x)$ appartengono anche a questa classe. Chiaramente, se $\delta_k (x)$ o $\text{Pr}(G = k | X = x)$ sono lineare in $x$, allora le frontiere di decisione saranno anche lineare.
 
 In realtà, tutto ciò di cui abbiamo bisogno è che alcuna trasformazione monotona di $\delta_k$ o $\text{Pr}(G = k | X = x)$ sia lineare affinché le frontiere di decisione siano lineari. Per esempio, se ci sono due classi, un modello popolare per le probabilità posteriori è
+
 \begin{nalign} \label{eq4-1}
 \text{Pr}(G = 1 | X = 1) & = \frac{e^{\beta_0 + \beta^T x}}{1 + e^{\beta_0 + \beta^T x}},\\
 \text{Pr}(G = 2 | X = 1) & = \frac{1}{1 + e^{\beta_0 + \beta^T x}}.
 \end{nalign}
+
 La trasformazione monotona qui è la trasformazione \textit{logit}: $\ln[p/(1 - p)]$\footnote{Se $p_1 = \text{Pr}(G = 1 | X = 1)$ e $p_2 = \text{Pr}(G = 2 | X = 1)$, poi abbiamo che $\ln[p_1/(1 - p_1)] = \beta_0 + \beta^T x$ e $\ln[p_2/(1 - p_2)] = - \left( \beta_0 + \beta^T x \right)$.}, e infatti vediamo che
-\begin{equation} \label{eq4-2}
+
+\begin{equation}\label{eq4-2}
 \ln \frac{\text{Pr}(G = 1 | X = 1)}{\text{Pr}(G = 2 | X = 1)} = \beta_0 + \beta^T x.
 \end{equation}
-La frontiera di decisione è il insieme di punti dove le log-probabilità sono zero, e questo è un iperpiano definito da $\{ x | \beta_0 + \beta^T x = 0 \}$. Discutiamo qui due metodi molto popolari ma diversi che risultano in log-probabilità lineari o \textit{logits}: il analisi di discriminante lineare e la regressione logistica lineare. Sebbene sono diversi nella sua derivazione, la differenza essenziale tra loro è nel modo in cui la funzione lineare si adatta ai dati di addestramento.
 
-Un approccio più diretto è modellare esplicitamente le frontiere tra le classi come lineare. 
+La frontiera di decisione è il insieme di punti dove le log-probabilità sono zero, e questo è un iperpiano definito da $\{ x | \beta_0 + \beta^T x = 0 \}$. Discutiamo qui due metodi molto popolari ma diversi che risultano in log-probabilità lineari o \textit{logits}: il analisi discriminante lineare e la regressione logistica lineare. Sebbene sono diversi nella sua derivazione, la differenza essenziale tra loro è nel modo in cui la funzione lineare si adatta ai dati di addestramento.
+
+Un approccio più diretto è modellare esplicitamente le frontiere tra le classi come lineari. Per un problema di due classi in uno spazio di input $p$-dimensionale, questo equivale a modellare la frontiera di decisione come un iperpiano --- in altre parole, un vettore normale e un punto di taglio. Vedremo due metodi che esplicitamente cercano ``iperpiani di separazione''. Il primo è il ben noto modello del percettrone di Rosenblatt (1958), con un algoritmo che trova un iperpiano di separazione nei dati di allenamento, se esiste. Il metodo secondo, dovuto a Vapnik (1996), trova un iperpiano di separazione ottimo se esiste uno, altrimenti trova un iperpiano che minimizza alcuna misura di sovrapposizione nei dati di allenamento. Trattiamo il caso separabile qui, e differiamo il trattamento del caso non separabile al Capitolo 12.
+
+Mentre questo capitolo intero è dedicato a frontiere di decisione lineari, c'è uno spazio considerabile di generalizzazione. Per esempio, possiamo espandere il nostro insieme di variabile $X_1, \dots, X_p$ includendo le loro quadrati e prodotti incrociati $X_1^2, X_2^2, \dots, X_1 X_2, \dots$, aggiungendo in tal modo $p(p + 1)/2$ variabile addizionali. Le funzioni lineari nello spazio aumentato mappano a funzione quadratiche nello spazio originale --- quindi mappano frontiere di decisione lineari a frontiere di decisione quadratiche. La figura \ref{fig4-1} illustra l'idea. I dati sono i stessi: il disegno della sinistra usa frontiere di decisione lineari nello spazio due-dimensionale mostrato, mentre che il disegno della destra usa frontiere di decisione lineare nello spazio aumentato cinque-dimensionale descritto sopra. Questo approccio può essere usato con qualsiasi trasformazione di base $h(X)$ dove $h : \mathbb{R}^p \to \mathbb{R}^q$ con $q > p$, e sarà esplorato in capitoli posteriori.\\
+
+\begin{figure}
+\label{fig4-1}
+\caption{Il disegno della sinistra mostra alcuni dati di tre classi, con frontiere di decisione lineari trovate con il analisi discriminante lineare. Il disegno della destra mostra frontiere di decisione quadratiche. Quelle sono state ottenute trovando frontiere lineari nello spazio cinque-dimensionale $X_1, X_2, X_1 X_2, X_1^2, X_2^2$. Disuguaglianze lineari in questo spazio sono disuguaglianze quadratiche nello spazio originale.}
+%\includegraphics[scale=•]{•}
+\end{figure}
+
+
+\section{Regressione lineare di una matrice indicatore}
+
+Qui ognuna delle categorie di risposta si codifica tramite una variabile indicatore. Così, se $\mathcal{G}$ ha $K$ classi, ci saranno $K$ tali indicatori $Y_k$, $k = 1, \dots, K$, con $Y_k = 1$ se $G = k$ e $0$ in caso contrario. Quelle vengono raccolte in un vettore $Y = (Y_1, \dots, Y_k)$, e le $N$ istanze di allenamento di quelle formano una matrice indicatore di risposta $\mathbf{Y}$ di $N \times K$. Adattiamo simultaneamente un modello di regressione lineare ad ognuna delle colonne di $\mathbf{Y}$, e il \textit{fit} è dato da
+\begin{equation}
+\label{eq4-3}
+\hat{\mathbf{Y}} = \mathbf{X} \left( \mathbf{X}^T \mathbf{X} \right)^{-1} \mathbf{X}^T \mathbf{Y}.
+\end{equation}
+Il Capitolo 3 ha più dettagli sulla regressione lineare. Nota che abbiamo un vettore di coefficienti per ogni colonna di risposta $\mathbf{y}_k$, e quindi abbiamo una matrice di coefficienti $\hat{\mathbf{B}} = \left( \mathbf{X}^T \mathbf{X} \right)^{-1}\mathbf{X}^T \mathbf{Y}$ di $(p + 1) \times K$. Ecco, $\mathbf{X}$ è la matrice modello con $p + 1$ colonne corrispondente ai $p$ input, e una prima colonna di 1 per l'intercettazione.
+
+Una nuova osservazione con input $x$ è classificata come segue:
+\begin{itemize}
+\item calcola il risultato adattato $\hat{f}(x)^T = (1, x^T)\hat{\mathbf{B}}$, che è un $K$-vettore;
+\item individua il componente più grande e classifica perciò:
+\begin{equation}
+\label{eq4-4}
+\hat{G}(x) = \text{argmax}_{k \in \mathcal{G}} \hat{f}_k (x).
+\end{equation}
+\end{itemize}
+
+Qual è 
 
 %\printbibliography
 
