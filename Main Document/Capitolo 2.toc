@@ -1,0 +1,10 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {spanish}{}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {1}Panoramica del apprendimento supervisionato}{2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.1}Introduzione}{2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.2}Tipi di variabili e terminologia}{2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.3}Due}{4}%

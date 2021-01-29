@@ -1,0 +1,44 @@
+\documentclass[11pt,openany]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,times}
+\usepackage{listings}
+\usepackage{amssymb,amsmath}
+\usepackage{graphicx}
+\graphicspath{{../Figures/}}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage[
+	backend=biber,
+	style=alphabetic,
+	citestyle=alphabetic
+]{biblatex}
+\usepackage[a4paper]{geometry}
+
+
+\addbibresource{../References/referencias.bib}
+
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+\spanishdecimal{.}
+
+
+\begin{document}
+
+\tableofcontents
+
+\chapter{Metodi lineari di classificazione}
+
+\subsection{Introduzione}
+
+In questo capitolo rivisitiamo il problema di classificazione e ci concentriamo in metodi lineari di classificazione. Dato che il nostro predittore $G(x)$ prende valori di un insieme discreto $\mathcal{G}$, possiamo sempre dividere lo spazio di input in una collezione di regioni secondo la classificazione. Abbiamo visto nel Capitolo 2 che le frontiere di questi regioni possono essere ruvide o lisce, dipendendo della funzione di predizione. Per una classe importante di procedure, queste \textit{frontiere di decisione} sono lineari; questo è ciò che intendiamo con metodi lineari di classificazione.
+
+Ci sono diversi modi in cui le frontiere di decisione lineari possono essere trovate. Nel Capitolo 2 abbiamo adattato modelli di regressione lineare alle variabili indicatori di classi, e dopo classifichiamo secondo il \textbf{largest fit}. Supponiamo che ci sono $K$ classi, etichettate come $1, 2, \dots, K$ per comodità, ed il modello lineare adattato per la $k$-esima variabile indicatore di risposta sia $\hat{f}_k(x) = \hat{\beta}_{k0} + \hat{\beta}_k^T x$. La frontiera di decisione tra la classe $k$ e $l$ è il insieme di punti per cui $\hat{f}_k (x) = \hat{f}_l (x)$, cioè, il insieme $\{ x : \left( \hat{\beta}_{k0} - \hat{\beta}_{l0} \right) + \left( \hat{\beta}_{k} - \hat{\beta}_{l} \right)^T x = 0 \}$, che è un insieme affine o un iperpiano\footnote{In senso stretto, un iperpiano attraversa l'origine, mentre un insieme affine non necessariamente. A volte ignoriamo la distinzione e intendiamo iperpiani in generale}. Siccome lo stesso è vero per ogni paio di classi, lo spazio di input è diviso in regioni di classificazione costante, con frontiere di decisione che sono iperplanare a tratti. Questo approccio con regressione fa parte di una classe di metodi che modellano \textit{funzioni discriminanti} $\delta_k (x)$ per ogni classe, e dopo classificano $x$ alla classe con il valore più grande nella sua funzione discriminante. Metodi che modellano le probabilità posteriori $\text{Pr}(G = k | X = x)$ appartengono anche a questa classe. Chiaramente, se $\delta_k (x)$ o $\text{Pr}(G = k | X = x)$ sono lineare in $x$, allora le frontiere di decisione saranno anche lineare.
+
+In realtà, 
+
+%\printbibliography
+
+\end{document}

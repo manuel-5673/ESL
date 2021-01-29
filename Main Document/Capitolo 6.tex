@@ -1,0 +1,41 @@
+\documentclass[11pt,openany]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,times}
+\usepackage{listings}
+\usepackage{amssymb,amsmath}
+\usepackage{graphicx}
+\graphicspath{{../Figures/}}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage[
+	backend=biber,
+	style=alphabetic,
+	citestyle=alphabetic
+]{biblatex}
+\usepackage[a4paper]{geometry}
+
+
+\addbibresource{../References/referencias.bib}
+
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+\spanishdecimal{.}
+
+
+\begin{document}
+
+\tableofcontents
+
+\chapter{Metodi di levigatura del kernel}
+
+In questo capitolo descriviamo una classe di tecniche di regressione che ottengono flessibilità nella stima della funzione di regressione $f(X)$ nel dominio $\mathbb{R}^p$, adattando separatamente un modello diverso ma semplice in ogni ponto di input $x_0$. Questo viene fatto usando solo quelle osservazioni vicine al punto obiettivo $x_0$ per adattare il modello semplice, e in modo tale da la funzione stimata risultante $\hat{f}(X)$ è liscia in $\mathbb{R}^p$. 
+
+\subsection{}
+
+
+%\printbibliography
+
+\end{document}

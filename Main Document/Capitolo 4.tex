@@ -90,7 +90,40 @@ Una nuova osservazione con input $x$ è classificata come segue:
 \end{equation}
 \end{itemize}
 
-Qual è 
+Qual è la logica di questo approccio? Una giustificazione piuttosto formale è vedere la regressione come una stima della aspettazione condizionata\footnote{Questo si vede nel Capitolo 3}. Per la variabile aleatoria $Y_k$, $E(Y_k | X = x) = \text{Pr}(G = k | X = x)$, quindi la aspettazione condiziona per ognuna delle $Y_k$ sembra di essere un obiettivo ragionevole. Il vero problema è: quanto è buono come approssimazione della aspettazione condizionata il modello rigido della regressione lineare? In alternativa, sono le $\hat{f}_k (x)$ stime ragionevoli delle probabilità posteriori $\text{Pr}(G = k | X = x)$, e più importante, questo importa?
+
+È abbastanza semplice verificare che $\sum_{k \in \mathcal{G}}{\hat{f}_k (x)} = 1$ per ogni $x$, finché c'è una intercettazione nel modello (la colonna di 1 in $\mathbf{X}$). Tuttavia, le $\hat{f}_k (x)$ possono essere negative o maggiore di 1, e in genere alcuni lo sono. Questo è una conseguenza della natura rigida della regressione lineare, soprattutto se facciamo predizioni fuori \textit{dall'ambito} dei dati di allenamento. Questi violazioni da sole non garantiscono che questo approccio non funzionerà, e infatti in molti problemi dà risulti simili a metodi lineari di classificazione più standard. Se facciamo regressione lineare su espansioni di base $h(X)$ delle inputs, questo approccio può portare a stime coerenti delle probabilità. Man mano che le dimensioni $N$ del insieme di allentamento aumentano, includiamo più elementi di base, così che la regressione lineare su queste funzioni di base si avvicina alla aspettazione condizionata. Discutiamo tali approcci nel Capitolo 5.
+
+Un punto di vista più semplicistico è quello di costruire \textit{obiettivi} $t_k$ per ogni classe, dove $t_k$ è la $k$-esima colonna della matrice identità di $K \times K$. Il nostro problema di predizione è quello di provare e riprodurre l'obiettivo adeguato per una osservazione. Con la stessa codifica di prima, il vettore di risposta $y_i$ ($i$-esima riga di $\mathbf{Y}$) per la osservazione $i$ ha il valore $y_i = t_k$ se $g_i = k$. Poi potremmo adattare il modello lineare \textit{ai} minimi quadrati\footnote{Nota che $(1, x_i^T)$ è la $i$-esima riga di $\mathbf{X}$.}
+
+\begin{equation}
+\label{eq4-5}
+\min_{\mathbf{B}}{\sum_{i = 1}^{N}{ \lVert y_i - [(1, x_i^T)\mathbf{B}]^T \rVert^2 }}.
+\end{equation}
+
+Il criterio è una somma di distanze euclidee quadrate dei vettori adattati dai loro obiettivi. Una nuova osservazione si classifica al calcolare il suo vettore adattato $\hat{f}(x)$ e classificandolo al obiettivo più vicino:
+
+\begin{equation}
+\label{eq4-6}
+\hat{G}(x) = \text{argmin}_{k}{ \lVert \hat{f}(x) - t_k \rVert^2 }.
+\end{equation}
+
+Questo è esattamente lo stesso dell'approccio precedente:
+\begin{enumerate}
+\item Il criterio della somma di norme quadrate è esattamente il criterio della regressione lineare con multiple risposte, solo visto in modo leggermente diverso. Dato che una norma quadrata è se stessa una somma di quadrati, i componenti si disaccoppiano e possono essere riorganizzati come un modello lineare separato per ogni elemento. Nota che questo è possibile solo perché non c'è niente nel modello che lega insieme le diverse risposte.
+
+\item 
+
+\end{enumerate}
+
+\begin{figure}
+\label{fig4-2}
+\caption{I dati .}
+%\includegraphics[scale=•]{•}
+\end{figure}
+
+
+
 
 %\printbibliography
 

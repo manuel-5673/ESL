@@ -1,0 +1,54 @@
+\documentclass[11pt,openany]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,times}
+\usepackage{listings}
+\usepackage{amssymb,amsmath}
+\usepackage{graphicx}
+\graphicspath{{../Figures/}}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage[
+	backend=biber,
+	style=alphabetic,
+	citestyle=alphabetic
+]{biblatex}
+\usepackage[a4paper]{geometry}
+
+
+\addbibresource{../References/referencias.bib}
+
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+\spanishdecimal{.}
+
+
+\begin{document}
+
+\tableofcontents
+
+\chapter{Espansioni di base e regolarizzazione}
+
+\subsection{Introduzione}
+
+Ne abbiamo già fatto uso dei modelli che sono lineari nelle caratteristiche di input, entrambe per regressione e per classificazione. Tutti la regressione lineare, l'analisi discriminante lineare, la regressione logistica e gli iperpiani di separazione si affidano a un modello lineare. È estremamente poco probabile che la vera funzione $f(X)$ sia lineare in $X$ in realtà. Nei problemi di regressione, $f(X) = E(Y | X)$ sarà tipicamente non lineare e non additiva in $X$, e ripresentare $f(X)$ con un modello lineare è di solito una approssimazione conveniente e a volte necessaria. Conveniente perché un modello lineare è facile da interpretare, ed è la approssimazione di Taylor di primo ordine di $f(X)$. A volte è necessaria perché con $N$ piccolo e/o $p$ grande, un modello lineare potrebbe essere tutto che possiamo adattare ai dati senza overfitting. Allo stesso modo, una frontiera di decisione di Bayes ottima, che è lineare, implica che qualche trasformazione monotona di $Pr(Y = 1 | X)$ è lineare in $X$. Questo è inevitabilmente una approssimazione.
+
+In questo capitolo e nel prossimo, discutiamo metodi popolari per andare oltre la linearità. La idea principale in questo capitolo è aumentare/rimpiazzare il vettore di inputs $X$ con variabili aggiuntive, le quale sono trasformazione di $X$, e poi usare modelli lineari in questo nuovo spazio di caratteristiche di input derivate.
+
+Denotiamo come $h_m(X) : \mathbb{R}^p \mapsto \mathbb{R}$ la $m$-esima trasformazione di $X$, con $m = 1, \dots, M$. Poi il modello
+\begin{equation}
+\label{eq5-1}
+f(X) = \sum_{m = 1}^{M}{\beta_m h_m (X)},
+\end{equation}
+è una espansione di base lineare in $X$. La bellezza di questo approccio è che una volta che le funzioni di base $h_m$ sono state determinate, i modelli sono lineari in queste variabili nuove, e la adattamento procede come prima.
+
+Alcuni esempi delle $h_m$ che sono semplici e ampiamente utilizzate sono le seguenti:
+\begin{itemize}
+\item $h_m(X) = X_m$, $m = 1, \dots, p$ che recupera il modello lineare originale.
+
+\item 
+\end{itemize}
+
+\end{document}
